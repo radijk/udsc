@@ -15,11 +15,13 @@
 static void usage(void)
 {
 	const char *usage = "\n"
-		"-m, --mode\t\tSet mode to server or client\n"
-		"-t, --type\t\tSet socket type\n"
+		"-m, --mode\t\tSet mode to SERVER or CLIENT\n"
+		"-t, --type\t\tSet socket type to "
+		"STREAM, DGRAM, RAW, RDM, SEQPACKET\n"
 		"-p, --path\t\tSet socket path\n"
-		"-e, --eol\t\tSet end of line type\n"
-		"-h, --help\t\tShows this help message\n";
+		"-e, --eol\t\tSet end of line type to DOS or UNIX\n"
+		"-v, --version\t\tPrint version information and exit\n";
+		"-h, --help\t\tShow this help message and exit\n";
 
 	print("Usage: %s [OPTION...]\n", PACKAGE);
 	print("%s", usage);

@@ -3,11 +3,11 @@
 #include "udsc.h"
 
 static const struct types types[] = {
-	{"stream",	SOCK_STREAM},
-	{"dgram",	SOCK_DGRAM},
-	{"raw",		SOCK_RAW},
-	{"rdm",		SOCK_RDM},
-	{"seqpacket",	SOCK_SEQPACKET},
+	{"STREAM",	SOCK_STREAM},
+	{"DGRAM",	SOCK_DGRAM},
+	{"RAW",		SOCK_RAW},
+	{"RDM",		SOCK_RDM},
+	{"SEQPACKET",	SOCK_SEQPACKET},
 	{NULL,		-1}
 };
 
@@ -39,10 +39,10 @@ const char *tstr(int type)
 
 int strm(const char *mode)
 {
-	if (!strcmp("server", mode))
+	if (!strcmp("SERVER", mode))
 		return SERVER_MODE;
 
-	if (!strcmp("client", mode))
+	if (!strcmp("CLIENT", mode))
 		return CLIENT_MODE;
 
 	return -1;
@@ -50,10 +50,10 @@ int strm(const char *mode)
 
 const char *streol(const char *eol)
 {
-	if (!strcmp("win", eol))
+	if (!strcmp("DOS", eol))
 		return "\r\n";
 
-	if (!strcmp("unix", eol))
+	if (!strcmp("UNIX", eol))
 		return "\n";
 
 	return NULL;
