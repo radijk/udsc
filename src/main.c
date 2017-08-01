@@ -44,6 +44,9 @@ int main(int argc, char **argv)
 		{0,		0,			0,	0}
 	};
 
+	if (argc < 2)
+		return 1;
+
 	while (1) {
 		c = getopt_long(argc, argv, "t:p:m:e:vh", options, &index);
 		if (c == -1)
