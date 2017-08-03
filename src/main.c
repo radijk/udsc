@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 		case 't':
 			type = strt(optarg);
 			if (type == -1) {
-				warnx("unknown type: \"%s\"", optarg);
+				warnx("unsupported type: \"%s\"", optarg);
 				error = 1;
 			}
 			break;

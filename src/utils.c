@@ -3,6 +3,8 @@
 #include <string.h>
 #include <errno.h>
 #include <err.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include "utils.h"
 
 int fdnb(int fd)

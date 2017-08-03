@@ -1,15 +1,16 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <sys/epoll.h>
 #include <sys/signalfd.h>
+#include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
 #include <err.h>
 #include "udsc.h"
 #include "utils.h"
+#include "connection.h"
 #include "server.h"
 
 #define MAX_EVENTS	3
@@ -118,13 +119,11 @@ int server(struct sockinfo *sockinfo)
 					goto err_sig;
 				}
 				if (events[n].events & EPOLLIN) {
-					memset(buf, 0, BUFSIZ);
-					count = read(clifd, buf, BUFSIZ);
+					count = recvdata(clifd);
 					if (count == -1) {
 						warn("read failed");
 						goto err_sig;
 					}
-					print("%s", buf);
 				}
 			}
 			if (events[n].data.fd == STDIN_FILENO) {
@@ -135,9 +134,9 @@ int server(struct sockinfo *sockinfo)
 						warn("getinput failed");
 						goto err_sig;
 					}
-					count = write(clifd, buf, count);
+					count = senddata(clifd, buf, count);
 					if (count == -1) {
-						warn("write failed");
+						warn("senddata failed");
 						goto err_sig;
 					}
 				}

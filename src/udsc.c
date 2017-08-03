@@ -3,12 +3,12 @@
 #include "udsc.h"
 
 static const struct types types[] = {
-	{"STREAM",	SOCK_STREAM},
-	{"DGRAM",	SOCK_DGRAM},
-	{"RAW",		SOCK_RAW},
-	{"RDM",		SOCK_RDM},
-	{"SEQPACKET",	SOCK_SEQPACKET},
-	{NULL,		-1}
+	{"STREAM",	SOCK_STREAM,	1},
+	{"DGRAM",	SOCK_DGRAM,	0},
+	{"RAW",		SOCK_RAW,	0},
+	{"RDM",		SOCK_RDM,	0},
+	{"SEQPACKET",	SOCK_SEQPACKET,	1},
+	{NULL,		-1,		0}
 };
 
 int strt(const char *type)
@@ -16,8 +16,12 @@ int strt(const char *type)
 	int i = 0;
 
 	while (types[i].str) {
-		if (!strcmp(types[i].str, type))
+		if (!strcmp(types[i].str, type)) {
+			if (!types[i].supported) {
+				return -1;
+			}
 			return types[i].val;
+		}
 		i++;
 	}
 

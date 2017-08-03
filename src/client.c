@@ -4,11 +4,13 @@
 #include <sys/un.h>
 #include <sys/epoll.h>
 #include <sys/signalfd.h>
+#include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
 #include <err.h>
 #include "udsc.h"
 #include "utils.h"
+#include "connection.h"
 #include "client.h"
 
 #define MAX_EVENTS	3
@@ -96,18 +98,13 @@ int client(struct sockinfo *sockinfo)
 		for (n = 0; n < nfds; n++) {
 			if (events[n].data.fd == sockfd) {
 				if (events[n].events & EPOLLIN) {
-					memset(buf, 0, size);
-					count = read(sockfd, buf, size);
+					count = recvdata(sockfd);
 					if (count == -1) {
-						warn("read failed: %m");
+						warn("recvdata failed: %m");
 						goto err_sig;
 					}
-					if (!count) {
-						print("connection lost\n");
-						goto err_sig;
-					}
-					print("%s", buf);
 				}
+
 			}
 			if (events[n].data.fd == STDIN_FILENO) {
 				if (events[n].events & EPOLLIN) {

@@ -6,6 +6,8 @@ udsc_SOURCES = \
 	src/udsc.c \
 	src/utils.h \
 	src/utils.c \
+	src/connection.h \
+	src/connection.c \
 	src/server.h \
 	src/server.c \
 	src/client.h \

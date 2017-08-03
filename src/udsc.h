@@ -7,6 +7,7 @@
 struct types {
 	const char *str;
 	int val;
+	int supported;
 };
 
 struct sockinfo {
