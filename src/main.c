@@ -15,15 +15,20 @@
 static void usage(void)
 {
 	const char *usage = "\n"
-		"-m, --mode\t\tSet mode to SERVER or CLIENT\n"
-		"-t, --type\t\tSet socket type to "
+		"  -m, --mode\t\tSet mode to SERVER or CLIENT\n"
+		"  -t, --type\t\tSet socket type to "
 		"STREAM, DGRAM, RAW, RDM, SEQPACKET\n"
-		"-p, --path\t\tSet socket path\n"
-		"-e, --eol\t\tSet end of line type to DOS or UNIX\n"
-		"-v, --version\t\tPrint version information and exit\n";
-		"-h, --help\t\tShow this help message and exit\n";
+		"  -p, --path\t\tSet socket path\n"
+		"  -e, --eol\t\tSet end of line type to DOS or UNIX\n"
+		"  -v, --version\t\tPrint version information and exit\n";
+		"  -h, --help\t\tShow this help message and exit\n";
 
 	print("Usage: %s [OPTION...]\n", PACKAGE);
+	print("Start a unix domain socket server/client user interface.\n");
+	print("The idea behind this utility is to enable manual testing of "
+		"unix sockets based programs.\n");
+	print("If started with no options %s starts a stream socket server on "
+		"`/tmp/udsc'.\n", PACKAGE);
 	print("%s", usage);
 }
 
@@ -31,7 +36,7 @@ int main(int argc, char **argv)
 {
 	int c, index, error = 0;
 	int type = SOCK_STREAM, mode = SERVER_MODE;
-	const char *path = {0};
+	const char *path = "/tmp/udsc";
 	const char *eol = "\n";
 	struct sockinfo sockinfo;
 	const struct option options[] = {
@@ -43,9 +48,6 @@ int main(int argc, char **argv)
 		{"help",	no_argument,		0,	'h'},
 		{0,		0,			0,	0}
 	};
-
-	if (argc < 2)
-		return 1;
 
 	while (1) {
 		c = getopt_long(argc, argv, "t:p:m:e:vh", options, &index);
